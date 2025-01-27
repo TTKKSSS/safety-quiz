@@ -1,0 +1,70 @@
+/* 背景樣式 */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9; /* 柔和背景色 */
+}
+
+/* 主容器 */
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #ffffff; /* 白色背景 */
+  box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* 問題文字 */
+.question {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* 答案選項按鈕 */
+.options button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  background: #007bff; /* 按鈕顏色（藍色） */
+  color: #ffffff;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.options button:hover {
+  background-color: #0056b3; /* 按鈕懸停顏色 */
+}
+
+/* 分數文字 */
+.score {
+  font-size: 24px;
+  font-weight: bold;
+  color: #28a745; /* 綠色文字 */
+  margin-top: 20px;
+}
+
+/* 回到主頁按鈕 */
+.reset-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #ffc107; /* 黃色按鈕 */
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+  background: #e0a800;
+}
