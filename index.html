@@ -63,7 +63,7 @@
   <script>
     const questions = []; // Placeholder for JSON data
 
-    fetch('safety_quiz_questions_fixed.json') // Load JSON dynamically
+    fetch('/safety_quiz_questions_fixed.json') // Load JSON dynamically
       .then(response => response.json())
       .then(data => {
         questions.push(...data);
