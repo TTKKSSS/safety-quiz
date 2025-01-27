@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安全問答遊戲</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    .question {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .options button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="game">
+      <div id="question-box">
+        <div class="question" id="question">題目將顯示在這裡</div>
+        <div class="options" id="options"></div>
+      </div>
+      <div id="result-box" style="display: none;">
+        <div class="result" id="score"></div>
+        <div class="result" id="time"></div>
+        <button onclick="restartGame()">重新開始</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = []; // Placeholder for JSON data
+
+    fetch('safety_quiz_questions_fixed.json') // Load JSON dynamically
+      .then(response => response.json())
+      .then(data => {
+        questions.push(...data);
+        startGame();
+      });
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let startTime;
+    let totalAnswerTime = 0;
+
+    function startGame() {
+      currentQuestionIndex = 0;
+      score = 0;
+      totalAnswerTime = 0;
+      document.getElementById('result-box').style.display = 'none';
+      document.getElementById('question-box').style.display = 'block';
+      startTime = Date.now();
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const questionData = questions[currentQuestionIndex];
+      document.getElementById('question').textContent = questionData.question;
+      const optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = '';
+
+      questionData.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.onclick = () => checkAnswer(option);
+        optionsDiv.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedOption) {
+      const questionData = questions[currentQuestionIndex];
+      const endTime = Date.now();
+      totalAnswerTime += (endTime - startTime) / 1000;
+      if (selectedOption === questionData.options[questionData.answer.charCodeAt(0) - 97]) {
+        score++;
+      }
+
+      if (currentQuestionIndex < 29) {
+        currentQuestionIndex++;
+        startTime = Date.now();
+        showQuestion();
+      } else {
+        endGame();
+      }
+    }
+
+    function endGame() {
+      document.getElementById('question-box').style.display = 'none';
+      document.getElementById('result-box').style.display = 'block';
+      document.getElementById('score').textContent = `總分: ${score} / 30`;
+      document.getElementById('time').textContent = `平均答題時間: ${(totalAnswerTime / 30).toFixed(2)} 秒`;
+    }
+
+    function restartGame() {
+      startGame();
+    }
+  </script>
+</body>
+</html>
